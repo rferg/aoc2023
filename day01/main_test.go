@@ -5,6 +5,7 @@ import (
 )
 
 func Test_extractDigits(t *testing.T) {
+	numbers := []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 	tests := []struct {
 		line          string
 		expectedFirst int
@@ -28,7 +29,7 @@ func Test_extractDigits(t *testing.T) {
 		{
 			line:          "fzrpfhbfvj6dbxbtfs7twofksfbshrzkdeightwoqg",
 			expectedFirst: 6,
-			expectedLast:  7,
+			expectedLast:  2,
 		},
 		{
 			line:          "vnrnkfp6",
@@ -50,10 +51,15 @@ func Test_extractDigits(t *testing.T) {
 			expectedFirst: 9,
 			expectedLast:  4,
 		},
+		{
+			line:          "seventhree4lnxcvdprp66hsjfive",
+			expectedFirst: 7,
+			expectedLast:  5,
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.line, func(t *testing.T) {
-			actualFirst, actualLast, err := extractDigits(test.line)
+			actualFirst, actualLast, err := extractDigits(test.line, numbers)
 			if err != nil {
 				t.Error(err)
 			}
