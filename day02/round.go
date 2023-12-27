@@ -12,6 +12,10 @@ type Round struct {
 	Green int
 }
 
+func (round Round) Power() int {
+	return round.Red * round.Blue * round.Green
+}
+
 func ParseRound(roundString string) (Round, error) {
 	round := Round{}
 	for _, countString := range strings.Split(roundString, ",") {

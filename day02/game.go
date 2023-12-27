@@ -19,6 +19,25 @@ func (game Game) IsPossible(maxRound Round) bool {
 	return true
 }
 
+func (game Game) MaxRound() Round {
+	round := Round{}
+	for _, currentRound := range game.Rounds {
+		if currentRound.Red > round.Red {
+			round.Red = currentRound.Red
+		}
+
+		if currentRound.Blue > round.Blue {
+			round.Blue = currentRound.Blue
+		}
+
+		if currentRound.Green > round.Green {
+			round.Green = currentRound.Green
+		}
+	}
+
+	return round
+}
+
 func ParseGame(line string) (Game, error) {
 	splitOnColon := strings.Split(line, ":")
 	header := splitOnColon[0]
