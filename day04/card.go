@@ -7,7 +7,14 @@ import (
 )
 
 func ParseCard(line string) (Card, error) {
-	numbersSection := strings.Split(line, ":")[1]
+	grossSplit := strings.Split(line, ":")
+	idSection := grossSplit[0]
+	id, err := strconv.Atoi(strings.Fields(idSection)[1])
+	if err != nil {
+		return Card{}, err
+	}
+
+	numbersSection := grossSplit[1]
 	splitNumbers := strings.Split(numbersSection, "|")
 	winningNumbers, err := parseIntSet(splitNumbers[0])
 	if err != nil {
@@ -19,7 +26,7 @@ func ParseCard(line string) (Card, error) {
 		return Card{}, err
 	}
 
-	return Card{Numbers: cardNumbers, WinningNumbers: winningNumbers}, nil
+	return Card{Id: id, Numbers: cardNumbers, WinningNumbers: winningNumbers}, nil
 }
 
 func parseIntSet(spaceDelimited string) (IntSet, error) {
@@ -39,6 +46,7 @@ func parseIntSet(spaceDelimited string) (IntSet, error) {
 type IntSet map[int]bool
 
 type Card struct {
+	Id             int
 	Numbers        IntSet
 	WinningNumbers IntSet
 }
